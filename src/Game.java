@@ -1,4 +1,6 @@
 import Locations.Cave;
+import Locations.River;
+import Locations.Forest;
 import Locations.Inventory;
 import Locations.Player;
 
@@ -46,7 +48,7 @@ public class Game {
                     break;
                     
                 case 2:
-                    showLocationMenu();
+                    showLocationMenu(player);
                     int locationChoice = input.nextInt();
                     input.nextLine();
                     
@@ -58,24 +60,58 @@ public class Game {
                             System.out.println("Tool Store - Coming soon!");
                             break;
                         case 3:
-                            System.out.println("Forest - Coming soon!");
+                            if (player.isForestCompleted()) {
+                                System.out.println("✅ You have already completed the Forest!");
+                            } else {
+                                System.out.println("\n🌲 Entering the Forest... 🌲");
+                                System.out.println("You hear mysterious whispers in the darkness...");
+                                
+                                Forest forest = new Forest(player);
+                                forest.combat();
+
+                                if (player.getHealth() <= 0) {
+                                    return;
+                                } else {
+                                    System.out.println("\nPress Enter to continue...");
+                                    input.nextLine();
+                                }
+                            }
                             break;
                         case 4:
-                            System.out.println("\n🏔️ Entering the Cave... 🏔️");
-                            System.out.println("You feel a chill in the air...");
-                            
-                            Cave cave = new Cave(player);
-                            cave.combat();
-
-                            if (player.getHealth() <= 0) {
-                                return;
+                            if (player.isCaveCompleted()) {
+                                System.out.println("✅ You have already completed the Cave!");
                             } else {
-                                System.out.println("\nPress Enter to continue...");
-                                input.nextLine();
+                                System.out.println("\n🏔️ Entering the Cave... 🏔️");
+                                System.out.println("You feel a chill in the air...");
+                                
+                                Cave cave = new Cave(player);
+                                cave.combat();
+
+                                if (player.getHealth() <= 0) {
+                                    return;
+                                } else {
+                                    System.out.println("\nPress Enter to continue...");
+                                    input.nextLine();
+                                }
                             }
                             break;
                         case 5:
-                            System.out.println("River - Coming soon!");
+                            if (player.isRiverCompleted()) {
+                                System.out.println("✅ You have already completed the River!");
+                            } else {
+                                System.out.println("\n🏞️ Approaching the River... 🏞️");
+                                System.out.println("You hear the sound of flowing water and growling...");
+                                
+                                River river = new River(player);
+                                river.combat();
+
+                                if (player.getHealth() <= 0) {
+                                    return;
+                                } else {
+                                    System.out.println("\nPress Enter to continue...");
+                                    input.nextLine();
+                                }
+                            }
                             break;
                         default:
                             System.out.println("Invalid choice!");
@@ -109,15 +145,34 @@ public class Game {
         System.out.print("Choose an option: ");
     }
 
-    private void showLocationMenu() {
+    private void showLocationMenu(Player player) {
         System.out.println("\n" + "=".repeat(25));
         System.out.println("🗺️ LOCATIONS 🗺️");
         System.out.println("=".repeat(25));
         System.out.println("1. Safe House");
         System.out.println("2. Tool Store");
-        System.out.println("3. Forest");
-        System.out.println("4. Cave ⚔️");
-        System.out.println("5. River");
+        
+        // Forest durumu kontrolü
+        if (player.isForestCompleted()) {
+            System.out.println("3. Forest ✅");
+        } else {
+            System.out.println("3. Forest ⚔️");
+        }
+        
+        // Cave durumu kontrolü
+        if (player.isCaveCompleted()) {
+            System.out.println("4. Cave ✅");
+        } else {
+            System.out.println("4. Cave ⚔️");
+        }
+        
+        // River durumu kontrolü
+        if (player.isRiverCompleted()) {
+            System.out.println("5. River ✅");
+        } else {
+            System.out.println("5. River ⚔️");
+        }
+        
         System.out.println("=".repeat(25));
         System.out.print("Choose a location: ");
     }

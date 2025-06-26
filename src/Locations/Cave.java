@@ -99,6 +99,8 @@ public class Cave extends BattleLocation {
 
         player.getInventory().setFood(true);
         System.out.println("You found food in the cave!");
+
+        player.setCaveCompleted(true);
         
         zombies.clear();
     }

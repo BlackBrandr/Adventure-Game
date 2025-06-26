@@ -13,6 +13,10 @@ public class Player {
     int gold;
     int damage;
 
+    boolean caveCompleted = false;
+    boolean riverCompleted = false;
+    boolean forestCompleted = false;
+
     public Player(Inventory inventory, String name, int health, int gold, int damage) {
         this.inventory = inventory;
         this.name = name;
@@ -59,6 +63,30 @@ public class Player {
 
     public void setDamage(int damage) {
         this.damage = damage;
+    }
+
+    public boolean isCaveCompleted() {
+        return caveCompleted;
+    }
+
+    public void setCaveCompleted(boolean caveCompleted) {
+        this.caveCompleted = caveCompleted;
+    }
+
+    public boolean isRiverCompleted() {
+        return riverCompleted;
+    }
+
+    public void setRiverCompleted(boolean riverCompleted) {
+        this.riverCompleted = riverCompleted;
+    }
+
+    public boolean isForestCompleted() {
+        return forestCompleted;
+    }
+
+    public void setForestCompleted(boolean forestCompleted) {
+        this.forestCompleted = forestCompleted;
     }
 
     public void SelectCharacter(){
