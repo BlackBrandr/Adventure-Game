@@ -1,6 +1,7 @@
 import Locations.Cave;
 import Locations.River;
 import Locations.Forest;
+import Locations.SafeHouse;
 import Locations.Inventory;
 import Locations.Player;
 
@@ -54,7 +55,10 @@ public class Game {
                     
                     switch (locationChoice) {
                         case 1:
-                            System.out.println("Safe House - Coming soon!");
+                            SafeHouse safeHouse = new SafeHouse(player);
+                            safeHouse.onLocation();
+                            System.out.println("\nPress Enter to continue...");
+                            input.nextLine();
                             break;
                         case 2:
                             System.out.println("Tool Store - Coming soon!");
@@ -149,7 +153,7 @@ public class Game {
         System.out.println("\n" + "=".repeat(25));
         System.out.println("🗺️ LOCATIONS 🗺️");
         System.out.println("=".repeat(25));
-        System.out.println("1. Safe House");
+        System.out.println("1. Safe House 🏠");
         System.out.println("2. Tool Store");
         
         // Forest durumu kontrolü
@@ -205,7 +209,7 @@ public class Game {
             System.out.println("👤 CHARACTER INFORMATION 👤");
             System.out.println("=".repeat(35));
             System.out.println("Name: " + player.getName());
-            System.out.println("Health: " + player.getHealth());
+            System.out.println("Health: " + player.getHealth() + "/" + player.getMaxHealth());
             System.out.println("Damage: " + player.getDamage());
             System.out.println("Gold: " + player.getGold());
             System.out.println("=".repeat(35));

@@ -10,6 +10,7 @@ public class Player {
     Inventory inventory;
     String name;
     int health;
+    int maxHealth; // Maksimum sağlığı takip etmek için
     int gold;
     int damage;
 
@@ -21,6 +22,7 @@ public class Player {
         this.inventory = inventory;
         this.name = name;
         this.health = health;
+        this.maxHealth = health;
         this.gold = gold;
         this.damage = damage;
     }
@@ -47,6 +49,18 @@ public class Player {
 
     public void setHealth(int health) {
         this.health = health;
+    }
+
+    public int getMaxHealth() {
+        return maxHealth;
+    }
+
+    public void setMaxHealth(int maxHealth) {
+        this.maxHealth = maxHealth;
+    }
+
+    public void restoreFullHealth() {
+        this.health = this.maxHealth;
     }
 
     public int getGold() {
@@ -102,6 +116,7 @@ public class Player {
                 Samurai samurai = new Samurai(1, 21, 5, 15);
                 this.setDamage(samurai.getDamage());
                 this.setHealth(samurai.getHealth());
+                this.setMaxHealth(samurai.getHealth());
                 this.setGold(samurai.getGold());
                 System.out.println("Samurai selected\n");
                 System.out.println("You have " + this.getDamage() + " damage");
@@ -112,6 +127,7 @@ public class Player {
                 Archer archer = new Archer(2, 18, 7, 20);
                 this.setDamage(archer.getDamage());
                 this.setHealth(archer.getHealth());
+                this.setMaxHealth(archer.getHealth());
                 this.setGold(archer.getGold());
                 System.out.println("Archer selected\n");
                 System.out.println("You have " + this.getDamage() + " damage");
@@ -122,6 +138,7 @@ public class Player {
                 Knight knight = new Knight(3, 24, 8, 5);
                 this.setDamage(knight.getDamage());
                 this.setHealth(knight.getHealth());
+                this.setMaxHealth(knight.getHealth());
                 this.setGold(knight.getGold());
                 System.out.println("Knight selected\n");
                 System.out.println("You have " + this.getDamage() + " damage");
