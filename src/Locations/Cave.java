@@ -9,7 +9,7 @@ import java.util.Scanner;
 public class Cave extends BattleLocation {
     private List<Zombie> zombies;
     private Locations.Player player;
-    private int initialZombieCount; // Başlangıçtaki zombie sayısını sakla
+    private int initialZombieCount;
     
     public Cave(Locations.Player player) {
         super("Cave");

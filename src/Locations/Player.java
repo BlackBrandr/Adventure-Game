@@ -10,7 +10,7 @@ public class Player {
     Inventory inventory;
     String name;
     int health;
-    int maxHealth; // Maksimum sağlığı takip etmek için
+    int maxHealth;
     int gold;
     int damage;
 

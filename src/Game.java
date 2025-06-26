@@ -2,6 +2,7 @@ import Locations.Cave;
 import Locations.River;
 import Locations.Forest;
 import Locations.SafeHouse;
+import Locations.ToolStore;
 import Locations.Inventory;
 import Locations.Player;
 
@@ -39,6 +40,11 @@ public class Game {
                 break;
             }
 
+            if (checkWinCondition(player)) {
+                showWinMessage(player);
+                break;
+            }
+
             showMainMenu();
             int choice = input.nextInt();
             input.nextLine();
@@ -61,7 +67,10 @@ public class Game {
                             input.nextLine();
                             break;
                         case 2:
-                            System.out.println("Tool Store - Coming soon!");
+                            ToolStore toolStore = new ToolStore(player);
+                            toolStore.onLocation();
+                            System.out.println("\nPress Enter to continue...");
+                            input.nextLine();
                             break;
                         case 3:
                             if (player.isForestCompleted()) {
@@ -137,6 +146,44 @@ public class Game {
         }
     }
 
+    private boolean checkWinCondition(Player player) {
+        Inventory inventory = player.getInventory();
+        return inventory.isWater() && inventory.isFood() && inventory.isFirewood();
+    }
+
+    private void showWinMessage(Player player) {
+        System.out.println("\n" + "=".repeat(50));
+        System.out.println("🎉🎉🎉 CONGRATULATIONS! YOU WON THE GAME! 🎉🎉🎉");
+        System.out.println("=".repeat(50));
+        System.out.println("🏆 " + player.getName() + ", you are a true adventurer! 🏆");
+        System.out.println("");
+        System.out.println("🎯 You have successfully collected all survival items:");
+        System.out.println("💧 Water - Found at the River");
+        System.out.println("🍖 Food - Found in the Cave");
+        System.out.println("🔥 Firewood - Found in the Forest");
+        System.out.println("");
+        System.out.println("⚔️ Final Stats:");
+        System.out.println("❤️ Health: " + player.getHealth() + "/" + player.getMaxHealth());
+        System.out.println("💪 Damage: " + player.getDamage());
+        System.out.println("💰 Gold: " + player.getGold());
+        
+        if (player.getInventory().getWeaponName() != null) {
+            System.out.println("⚔️ Weapon: " + player.getInventory().getWeaponName() + 
+                             " (+" + player.getInventory().getWeaponDamage() + " damage)");
+        }
+        
+        if (player.getInventory().getArmorName() != null) {
+            System.out.println("🛡️ Armor: " + player.getInventory().getArmorName() + 
+                             " (+" + player.getInventory().getArmorDefense() + " defense)");
+        }
+        
+        System.out.println("");
+        System.out.println("🌟 You have proven yourself as a master adventurer!");
+        System.out.println("🏞️ All locations conquered, all items collected!");
+        System.out.println("🎮 Thank you for playing the Adventure Game!");
+        System.out.println("=".repeat(50));
+    }
+
     private void showMainMenu() {
         System.out.println("\n" + "=".repeat(30));
         System.out.println("🎮 ADVENTURE GAME MENU 🎮");
@@ -154,23 +201,20 @@ public class Game {
         System.out.println("🗺️ LOCATIONS 🗺️");
         System.out.println("=".repeat(25));
         System.out.println("1. Safe House 🏠");
-        System.out.println("2. Tool Store");
-        
-        // Forest durumu kontrolü
+        System.out.println("2. Tool Store 🏪");
+
         if (player.isForestCompleted()) {
             System.out.println("3. Forest ✅");
         } else {
             System.out.println("3. Forest ⚔️");
         }
-        
-        // Cave durumu kontrolü
+
         if (player.isCaveCompleted()) {
             System.out.println("4. Cave ✅");
         } else {
             System.out.println("4. Cave ⚔️");
         }
-        
-        // River durumu kontrolü
+
         if (player.isRiverCompleted()) {
             System.out.println("5. River ✅");
         } else {
