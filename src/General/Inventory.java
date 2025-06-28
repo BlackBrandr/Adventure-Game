@@ -1,4 +1,4 @@
-package Locations;
+package General;
 
 public class Inventory {
     boolean water = false;

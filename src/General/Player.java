@@ -1,4 +1,4 @@
-package Locations;
+package General;
 
 import java.util.Scanner;
 import Characters.Samurai;
@@ -17,6 +17,7 @@ public class Player {
     boolean caveCompleted = false;
     boolean riverCompleted = false;
     boolean forestCompleted = false;
+    boolean mineCompleted = false;
 
     public Player(Inventory inventory, String name, int health, int gold, int damage) {
         this.inventory = inventory;
@@ -101,6 +102,14 @@ public class Player {
 
     public void setForestCompleted(boolean forestCompleted) {
         this.forestCompleted = forestCompleted;
+    }
+
+    public boolean isMineCompleted() {
+        return mineCompleted;
+    }
+
+    public void setMineCompleted(boolean mineCompleted) {
+        this.mineCompleted = mineCompleted;
     }
 
     public void SelectCharacter(){

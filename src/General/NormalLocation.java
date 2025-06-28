@@ -1,4 +1,4 @@
-package Locations;
+package General;
 
 public abstract class NormalLocation extends Location {
     public NormalLocation(String name) {

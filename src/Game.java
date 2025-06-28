@@ -1,10 +1,10 @@
-import Locations.Cave;
-import Locations.River;
-import Locations.Forest;
-import Locations.SafeHouse;
-import Locations.ToolStore;
-import Locations.Inventory;
-import Locations.Player;
+import General.Cave;
+import General.River;
+import General.Forest;
+import General.SafeHouse;
+import General.ToolStore;
+import General.Inventory;
+import General.Player;
 
 import java.util.Scanner;
 
@@ -97,7 +97,7 @@ public class Game {
                                 System.out.println("\n🏔️ Entering the Cave... 🏔️");
                                 System.out.println("You feel a chill in the air...");
                                 
-                                Cave cave = new Cave(player);
+                                Cave cave = new Cave(player, inventory);
                                 cave.combat();
 
                                 if (player.getHealth() <= 0) {
@@ -126,6 +126,25 @@ public class Game {
                                 }
                             }
                             break;
+                            case 6:
+                                if (player.isCaveCompleted()) {
+                                    System.out.println("✅ You have already completed the Cave!");
+                                } else {
+                                    System.out.println("\n\uD83C\uDF59 Approaching the Cave... \uD83C\uDF59");
+                                    System.out.println("You hear the sound of flowing snakes and fear...");
+
+                                    Cave cave = new Cave(player, inventory);
+                                    cave.combat();
+
+                                    if (player.getHealth() <= 0) {
+                                        return;
+                                    } else {
+                                        System.out.println("\nPress Enter to continue...");
+                                        input.nextLine();
+                                    }
+                                }
+                                break;
+
                         default:
                             System.out.println("Invalid choice!");
                     }
@@ -219,6 +238,12 @@ public class Game {
             System.out.println("5. River ✅");
         } else {
             System.out.println("5. River ⚔️");
+        }
+
+        if (player.isCaveCompleted()) {
+            System.out.println("6. Cave ✅");
+        } else {
+            System.out.println("6. Cave ⚔️");
         }
         
         System.out.println("=".repeat(25));

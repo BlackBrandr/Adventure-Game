@@ -1,4 +1,6 @@
-package Locations;
+package General;
+
+import Enemies.Enemy;
 
 public abstract class BattleLocation extends Location {
     public BattleLocation(String name) {
@@ -11,5 +13,9 @@ public abstract class BattleLocation extends Location {
     }
 
     public abstract void combat();
+
+    public abstract void enemyAttack();
+
+    public abstract void playerAttack();
 
 }

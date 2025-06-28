@@ -1,4 +1,4 @@
-package Locations;
+package General;
 
 import java.util.Scanner;
 

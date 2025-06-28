@@ -1,4 +1,4 @@
-package Locations;
+package General;
 
 
 public abstract class Location {

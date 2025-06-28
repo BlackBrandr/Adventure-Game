@@ -1,4 +1,4 @@
-package Locations;
+package General;
 
 public class SafeHouse extends NormalLocation {
     private Player player;

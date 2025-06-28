@@ -1,6 +1,8 @@
-package Locations;
+package General;
 
 import Enemies.Bear;
+import Enemies.Enemy;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -8,10 +10,10 @@ import java.util.Scanner;
 
 public class River extends BattleLocation {
     private List<Bear> bears;
-    private Locations.Player player;
+    private General.Player player;
     private int initialBearCount;
     
-    public River(Locations.Player player) {
+    public River(General.Player player) {
         super("River");
         this.player = player;
         this.bears = new ArrayList<>();
@@ -34,57 +36,81 @@ public class River extends BattleLocation {
         
         System.out.println(bearCount + " bear(s) spawned at the river!");
     }
-    
+
+    @Override
+    public void enemyAttack() {
+
+        System.out.println("\n--- Bears' Turn ---");
+        int totalBearDamage = 0;
+        for (Bear bear : bears) {
+            totalBearDamage += bear.getDamage();
+        }
+
+        int finalDamage = Math.max(0, totalBearDamage - player.getInventory().getArmorDefense());
+        player.setHealth(player.getHealth() - finalDamage);
+
+        System.out.println("Bears dealt " + finalDamage + " damage to you!");
+        System.out.println("Your health: " + player.getHealth());
+
+        if (player.getHealth() <= 0) {
+            defeat();
+
+        }
+    }
+
+    @Override
+    public void playerAttack() {
+
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("\n--- Player's Turn ---");
+        System.out.println("Your health: " + player.getHealth());
+        System.out.println("Remaining bears: " + bears.size());
+        System.out.println("Press Enter to attack!");
+        scanner.nextLine();
+
+        if (!bears.isEmpty()) {
+            Bear targetBear = bears.get(0);
+            int totalPlayerDamage = player.getDamage() + player.getInventory().getWeaponDamage();
+            targetBear.setHealth(targetBear.getHealth() - totalPlayerDamage);
+
+            System.out.println("You dealt " + totalPlayerDamage + " damage to bear!");
+            System.out.println("Bear health: " + targetBear.getHealth());
+
+            if (targetBear.getHealth() <= 0) {
+                System.out.println("Bear defeated!");
+                bears.remove(0);
+            }
+        }
+    }
+
     @Override
     public void combat() {
-        Scanner scanner = new Scanner(System.in);
+        Random random = new Random();
+        boolean playerStartsFirst = random.nextBoolean();
+        
+        System.out.println(playerStartsFirst ? "You get the first move!" : "The bears get the first move!");
         
         while (player.getHealth() > 0 && !bears.isEmpty()) {
-
-            System.out.println("\n--- Player's Turn ---");
-            System.out.println("Your health: " + player.getHealth());
-            System.out.println("Remaining bears: " + bears.size());
-            System.out.println("Press Enter to attack!");
-            scanner.nextLine();
-            
-            if (!bears.isEmpty()) {
-                Bear targetBear = bears.get(0);
-                int totalPlayerDamage = player.getDamage() + player.getInventory().getWeaponDamage();
-                targetBear.setHealth(targetBear.getHealth() - totalPlayerDamage);
-                
-                System.out.println("You dealt " + totalPlayerDamage + " damage to bear!");
-                System.out.println("Bear health: " + targetBear.getHealth());
-
-                if (targetBear.getHealth() <= 0) {
-                    System.out.println("Bear defeated!");
-                    bears.remove(0);
+            if (playerStartsFirst) {
+                playerAttack();
+                if (!bears.isEmpty()) {
+                    enemyAttack();
+                }
+            } else {
+                enemyAttack();
+                if (player.getHealth() > 0) {
+                    playerAttack();
                 }
             }
-
+            
             if (bears.isEmpty()) {
                 victory();
                 break;
             }
-
-            System.out.println("\n--- Bears' Turn ---");
-            int totalBearDamage = 0;
-            for (Bear bear : bears) {
-                totalBearDamage += bear.getDamage();
-            }
-
-            int finalDamage = Math.max(0, totalBearDamage - player.getInventory().getArmorDefense());
-            player.setHealth(player.getHealth() - finalDamage);
-            
-            System.out.println("Bears dealt " + finalDamage + " damage to you!");
-            System.out.println("Your health: " + player.getHealth());
-
-            if (player.getHealth() <= 0) {
-                defeat();
-                break;
-            }
         }
     }
-    
+
     private void victory() {
         System.out.println("\n🎉 VICTORY! 🎉");
         System.out.println("You defeated all bears at the river!");
